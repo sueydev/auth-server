@@ -1,4 +1,7 @@
 # Logs
+auth-server-dev-c7724-firebase-adminsdk-fbsvc-e76720cf03.json
+.DS_Store
+.env
 logs
 *.log
 npm-debug.log*

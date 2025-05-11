@@ -1,0 +1,36 @@
+## Guide
+
+URL:  http://localhost:3000/.well-known/openid-configuration
+
+PATH:  /Users/birdsong/drafts/auth-server/example/support/configuration.js
+```
+
+   {
+      client_id: 'birdsong',
+      client_secret: '12345abcde',
+      redirect_uris: ['https://oidcdebugger.com/debug', 'http://localhost:4000/callback']
+    }
+
+```
+
+## Runtime
+
+```
+nvm use lts/hydrogen
+```
+
+
+## Dev Server Startup
+
+```
+ngrok start --all
+```
+
+## Client Server Named ts-server
+
+https://54594a2c5d5b.ngrok.app/api/v1/auth/login
+
+
+## Clinet Server Doc
+https://www.passportjs.org/packages/passport-openidconnect/
+

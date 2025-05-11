@@ -6,6 +6,7 @@ const logins = new Map();
 class Account {
   constructor(id, profile) {
     this.accountId = id || nanoid();
+    this.email = 'doug@suey.dev'
     this.profile = profile;
     store.set(this.accountId, this);
   }
@@ -19,17 +20,25 @@ class Account {
    *   or not return them in id tokens but only userinfo and so on.
    */
   async claims(use, scope) { // eslint-disable-line no-unused-vars
+    console.log("CLAIMS")
     if (this.profile) {
+      console.log("CLAIMS1")
+      console.log(this.profile);
       return {
         sub: this.accountId, // it is essential to always return a sub claim
         email: this.profile.email,
-        email_verified: this.profile.email_verified,
-        family_name: this.profile.family_name,
-        given_name: this.profile.given_name,
+        // email_verified: this.profile.email_verified,
+        // family_name: this.profile.family_name,
+        // given_name: this.profile.given_name,
         locale: this.profile.locale,
-        name: this.profile.name,
+        // name: this.profile.name,
+        // day: this.profile.day
+        // name: this.profile
+        profile: this.profile
       };
     }
+
+    console("NO PROFILE!")
 
     return {
       sub: this.accountId, // it is essential to always return a sub claim
@@ -73,7 +82,18 @@ class Account {
 
   static async findByLogin(login) {
     if (!logins.get(login)) {
-      logins.set(login, new Account(login));
+      logins.set(login, new Account(login, {
+        day: 'thursday', 
+        gender: 'male',
+        email: 'doogle@gmail.com',
+        website: 'suey.dev', 
+        given_name: "Doogs",
+        profile: {one: "one", two: "two"},
+        birthdate: '1987-10-16',
+        family_name: 'Doe',
+        middle_name: 'Barrett',
+        website2: 'test.com'
+      }));
     }
 
     return logins.get(login);
@@ -83,9 +103,36 @@ class Account {
     // token is a reference to the token used for which a given account is being loaded,
     //   it is undefined in scenarios where account claims are returned from authorization endpoint
     // ctx is the koa request context
-    if (!store.get(id)) new Account(id); // eslint-disable-line no-new
+    if (!store.get(id)) new Account(id, {day: 'thursday', email2: 'dougbcarroll@gmail.com'}); // eslint-disable-line no-new
     return store.get(id);
   }
+
+  // static async findAccount(ctx, id, token) {
+  //   const user  = store.get(id);
+  //   console.log("FIND_ACCOUNT")
+
+  //   console.log(user)
+
+  //   console.log("END_FIND_ACCOUNT")
+
+  //   // Fetch user data from your database or any source
+  //   //const user = await getUserFromDatabase(sub);
+
+  //   if (!user) return undefined;
+
+  //   return {
+  //     accountId: sub,
+  //     async claims(use, scope) {
+  //       return {
+  //         sub,
+  //         name: user.name,
+  //         email: user.email,
+  //         email_verified: user.email_verified,
+  //         preferred_username: user.username,
+  //       };
+  //     },
+  //   };
+  // }
 }
 
 export default Account;

@@ -91,8 +91,10 @@ export default (app, provider) => {
     try {
       const { prompt: { name } } = await provider.interactionDetails(req, res);
       assert.equal(name, 'login');
+      console.log(req.body.login);
       const account = await Account.findByLogin(req.body.login);
-
+      console.log('account');
+      console.log(account);
       const result = {
         login: {
           accountId: account.accountId,

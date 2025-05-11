@@ -13,9 +13,12 @@ import Account from './support/account.js';
 import configuration from './support/configuration.js';
 import routes from './routes/express.js';
 
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 const __dirname = dirname(import.meta.url);
 
-const { PORT = 3000, ISSUER = `http://localhost:${PORT}` } = process.env;
+const { PORT = 3000, ISSUER = process.env.OIDC_SERVER } = process.env;
 configuration.findAccount = Account.findAccount;
 
 const app = express();
@@ -60,12 +63,13 @@ try {
       } else {
         res.status(400).json({
           error: 'invalid_request',
-          error_description: 'do yourself a favor and only use https',
+          error_description: 'Do yourself a favor. Only use https',
         });
       }
     });
   }
 
+  provider.proxy = true;
   routes(app, provider);
   app.use(provider.callback());
   server = app.listen(PORT, () => {
