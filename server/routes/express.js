@@ -26,12 +26,19 @@ export default (app, provider) => {
     const orig = res.render;
     // you'll probably want to use a full blown render engine capable of layouts
     res.render = (view, locals) => {
-      app.render(view, locals, (err, html) => {
+      app.render(view, locals, async (err, html) => {
         if (err) throw err;
-        orig.call(res, '_layout', {
-          ...locals,
-          body: html,
-        });
+        if (view !== 'facelogin') {
+          orig.call(res, '_layout', {
+            ...locals,
+            body: html,
+          });
+        } else {
+          orig.call(res, 'facelogin', {
+            ...locals,
+            body: html,
+          }); 
+        }
       });
     };
     next();
@@ -52,7 +59,8 @@ export default (app, provider) => {
 
       switch (prompt.name) {
         case 'login': {
-          return res.render('login', {
+          return res.render('facelogin', {
+            data: btoa(JSON.stringify({ client, uid, session })),
             client,
             uid,
             details: prompt.details,

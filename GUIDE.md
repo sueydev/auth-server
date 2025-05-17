@@ -17,6 +17,7 @@ PATH:  /Users/birdsong/drafts/auth-server/example/support/configuration.js
 
 ```
 nvm use lts/hydrogen
+nvm use lts/jod
 ```
 
 
@@ -28,9 +29,17 @@ ngrok start --all
 
 ## Client Server Named ts-server
 
-https://54594a2c5d5b.ngrok.app/api/v1/auth/login
+https://e004ffb048bc.ngrok.app/api/v1/auth/login
+
 
 
 ## Clinet Server Doc
 https://www.passportjs.org/packages/passport-openidconnect/
+
+
+## Git
+
+git clone git@github-sueydev:sueydev/ts-server.git
+git clone git@github-sueydev:sueydev/auth-server.git
+git clone git@github-sueydev:sueydev/face-login.git
 

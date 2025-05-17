@@ -69,6 +69,8 @@ try {
     });
   }
 
+  app.use('/', express.static(path.join(__dirname, 'public')));
+
   provider.proxy = true;
   routes(app, provider);
   app.use(provider.callback());
